@@ -80,7 +80,7 @@ export default function UserPage() {
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
   };
@@ -270,12 +270,10 @@ export default function UserPage() {
         }}
       >
         <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
+          Resend Mail
         </MenuItem>
 
         <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
           Delete
         </MenuItem>
       </Popover>
