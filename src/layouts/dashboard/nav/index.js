@@ -9,7 +9,7 @@ import account from '../../../_mock/account';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // components
-import Logo from '../../../assets/logo-light.png';
+import Logo from '../../../assets/logo.svg';
 import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
