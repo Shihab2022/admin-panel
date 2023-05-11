@@ -6,44 +6,54 @@ import {
   MenuItem,
   Container,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
 } from '@mui/material';
 import Iconify from '../../components/iconify';
 import MainTable from '../../components/table/index';
-import OrganisationData from '../../_mock/organisationData';
+import KeysData from '../../_mock/keysData';
 
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'keyName', label: 'Key Name', alignRight: false },
   { id: 'orgName', label: 'Org Name', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
   { id: '' },
 ];
 
-export default function Organisations() {
+export default function ApiKeys() {
     const [open, setOpen] = useState(null);
+    const [modal,setModal]=useState(false)
     const handleCloseMenu = () => {
         setOpen(null);
+      };
+      const handleClickOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setModal(false);
       };
   return (
     <>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-          Organisations
+          Api Keys
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Add Organisation
+          <Button onClick={()=>setModal(!modal)} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+            Add Keys
           </Button>
         </Stack>
         <MainTable
         TABLE_HEAD={TABLE_HEAD}
         setOpen={setOpen}
-        TABLE_DATA={OrganisationData}
-        switchStatus
-        placeholder='Search Organisation...'
+        TABLE_DATA={KeysData}
+        placeholder='Search Keys...'
         />
       </Container>
 
@@ -73,6 +83,29 @@ export default function Organisations() {
           Delete
         </MenuItem>
       </Popover>
+
+      <Dialog open={modal} onClose={handleClose}>
+        <DialogTitle>Add Your Api Keys</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here. We
+            will send updates occasionally.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Add Keys</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

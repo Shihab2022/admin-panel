@@ -141,17 +141,17 @@ export default function MainTable(props) {
                           <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
                         </TableCell>
 
-                        <TableCell component="th" scope="row" padding="none">
+                        {name&&<TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                            {avatarUrl&& <Avatar alt={name} src={avatarUrl} />}
                             <Typography variant="subtitle2" noWrap>
                               {name}
                             </Typography>
                           </Stack>
-                        </TableCell>
-                        <TableCell align="left">{email}</TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
+                        </TableCell>}
+                        {email&&<TableCell align="left">{email}</TableCell>}
+                        {company&&<TableCell align="left">{company}</TableCell>}
+                        {role&&<TableCell align="left">{role}</TableCell>}
 
                         <TableCell align="left">
                           <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
