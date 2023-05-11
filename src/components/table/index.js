@@ -153,9 +153,9 @@ export default function MainTable(props) {
                         {company&&<TableCell align="left">{company}</TableCell>}
                         {role&&<TableCell align="left">{role}</TableCell>}
 
-                        <TableCell align="left">
-                          <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
-                        </TableCell>
+                        {status&&<TableCell align="left">
+                          <Label color={(status === 'Pending'||status === 'Inactive' )&& 'error' || 'success'}>{sentenceCase(status)}</Label>
+                        </TableCell>}
                        {switchStatus&& <TableCell align="left">
                        {toggleStatus?<Switch defaultChecked />:<Switch />}
                         </TableCell>}

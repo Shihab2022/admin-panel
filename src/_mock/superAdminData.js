@@ -1,14 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { sample } from 'lodash';
 
-const OrganisationData = [...Array(20)].map(() => ({
+const SuperAdminData = [...Array(20)].map((_, index) => ({
   id: faker.datatype.uuid(),
   name: faker.name.fullName(),
-  company: faker.company.name(),
-  status: sample(['Verified', 'Pending']),
+  avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
   toggleStatus:faker.datatype.boolean(),
   role: sample(['Admin', 'Super Admin']),
   email:faker.internet.email()
 }));
 
-export default OrganisationData;
+export default SuperAdminData;

@@ -1,3 +1,5 @@
+
+
 import { useState } from 'react';
 import {
   Stack,
@@ -6,49 +8,42 @@ import {
   MenuItem,
   Container,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  TextField,
-  DialogActions,
 } from '@mui/material';
 import Iconify from '../../components/iconify';
 import MainTable from '../../components/table/index';
-import KeysData from '../../_mock/keysData';
+// import KeysData from '../../_mock/keysData';
+import SuperAdminData from '../../_mock/superAdminData';
 
 
 const TABLE_HEAD = [
-  { id: 'keyName', label: 'Key Name', alignRight: false },
-  { id: 'orgName', label: 'Org Name', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'name', label: 'Name', alignRight: false },
+  { id: 'email', label: 'Eamil', alignRight: false },
+  { id: 'role', label: 'Role', alignRight: false },
+  { id: 'changeRole', label: 'Change Role', alignRight: false },
   { id: '' },
 ];
 
-export default function ApiKeys() {
+export default function SuperAdmin() {
     const [open, setOpen] = useState(null);
-    const [modal,setModal]=useState(false)
     const handleCloseMenu = () => {
         setOpen(null);
-      };
-      const handleClose = () => {
-        setModal(false);
       };
   return (
     <>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-          Api Keys
+          Hi, Welcome back  Admin Page
           </Typography>
-          <Button onClick={()=>setModal(!modal)} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Add Keys
+          <Button  variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+            Add Admin
           </Button>
         </Stack>
         <MainTable
         TABLE_HEAD={TABLE_HEAD}
         setOpen={setOpen}
-        TABLE_DATA={KeysData}
+        TABLE_DATA={SuperAdminData}
+        switchStatus
         placeholder='Search Keys...'
         />
       </Container>
@@ -79,29 +74,6 @@ export default function ApiKeys() {
           Delete
         </MenuItem>
       </Popover>
-
-      <Dialog open={modal} onClose={handleClose}>
-        <DialogTitle>Add Your Api Keys</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Add Keys</Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 }

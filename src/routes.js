@@ -8,6 +8,7 @@ import Page404 from './pages/Page404';
 import DashboardAppPage from './pages/DashboardAppPage';
 import Organisations from './pages/organisations';
 import ApiKeys from './pages/apiKeys';
+import SuperAdmin from './pages/superAdmin';
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +23,7 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'organisations', element: <Organisations /> },
         { path: 'keys', element: <ApiKeys /> },
+        { path: 'superAdmin', element: <SuperAdmin /> },
      
       ],
     },
