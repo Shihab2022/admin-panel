@@ -9,6 +9,7 @@ import DashboardAppPage from './pages/DashboardAppPage';
 import Organisations from './pages/organisations';
 import ApiKeys from './pages/apiKeys';
 import SuperAdmin from './pages/superAdmin';
+import ChangePassword from './pages/changePassword';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +25,7 @@ export default function Router() {
         { path: 'organisations', element: <Organisations /> },
         { path: 'keys', element: <ApiKeys /> },
         { path: 'superAdmin', element: <SuperAdmin /> },
+        { path: 'updatePassword', element: <ChangePassword /> },
      
       ],
     },
