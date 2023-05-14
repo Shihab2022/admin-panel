@@ -59,7 +59,7 @@ export default function MainTable(props) {
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
-  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
 
@@ -95,6 +95,11 @@ export default function MainTable(props) {
     }
     setSelected(newSelected);
   };
+  const handleFilterByName = (event) => {
+    setPage(0);
+    setFilterName(event.target.value);
+  };
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -105,10 +110,7 @@ export default function MainTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const handleFilterByName = (event) => {
-    setPage(0);
-    setFilterName(event.target.value);
-  };
+ 
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - TABLE_DATA.length) : 0;
 

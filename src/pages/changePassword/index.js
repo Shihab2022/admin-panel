@@ -1,12 +1,18 @@
-import { Box, Button, Card, CardContent, CardHeader, Container, Divider, TextField } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, Container, Divider, Stack, TextField, Typography } from '@mui/material';
 import React from 'react';
 
 export default function ChangePassword(){
     return (
         <>
+   
           <Container>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <Typography variant="h4" gutterBottom>
+          Update Your Password
+          </Typography>
+        </Stack>
           <Card>
-        <CardHeader subheader="Update password" title="Password" />
+        {/* <CardHeader subheader="Update password" title="Password" /> */}
         <Divider/>
         <CardContent>
           <TextField

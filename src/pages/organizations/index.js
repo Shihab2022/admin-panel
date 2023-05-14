@@ -22,7 +22,7 @@ const TABLE_HEAD = [
   { id: '' },
 ];
 
-export default function Organisations() {
+export default function Organizations() {
     const [open, setOpen] = useState(null);
     const handleCloseMenu = () => {
         setOpen(null);

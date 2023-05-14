@@ -6,7 +6,7 @@ import UserPage from './pages/userPage/index';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import DashboardAppPage from './pages/DashboardAppPage';
-import Organisations from './pages/organisations';
+import Organizations from './pages/organizations';
 import ApiKeys from './pages/apiKeys';
 import SuperAdmin from './pages/superAdmin';
 import ChangePassword from './pages/changePassword';
@@ -22,7 +22,7 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
-        { path: 'organisations', element: <Organisations /> },
+        { path: 'organizations', element: <Organizations /> },
         { path: 'keys', element: <ApiKeys /> },
         { path: 'superAdmin', element: <SuperAdmin /> },
         { path: 'updatePassword', element: <ChangePassword /> },
