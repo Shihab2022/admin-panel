@@ -1,7 +1,7 @@
 import MaterialTable from 'material-table';
 import { forwardRef, React } from 'react';
-import AddBox from '@material-ui/icons/AddBox';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
+// import AddBox from '@material-ui/icons/AddBox';
+// import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
@@ -31,7 +31,7 @@ const ServerSidePaginationTable = () => {
   ];
 
   const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+    // Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
@@ -45,7 +45,7 @@ const ServerSidePaginationTable = () => {
     PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
     ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
     Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+    // SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     // ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
@@ -53,7 +53,7 @@ const ServerSidePaginationTable = () => {
     <>
       <MaterialTable
         icons={tableIcons}
-        title="Olympic Data"
+        title="Spatic Data"
         columns={columns}
         options={{ debounceInterval: 700, paddingY: '10px',paddingX: '5px', pageSizeOptions: [10, 20,30,50,100], pageSize: 10 }}
         data={(query) =>
