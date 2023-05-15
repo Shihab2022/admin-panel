@@ -2,13 +2,14 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
-//
-import BlogPage from './pages/BlogPage';
-import UserPage from './pages/UserPage';
+import UserPage from './pages/userPage/index';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
+import Organizations from './pages/organizations';
+import ApiKeys from './pages/apiKeys';
+import SuperAdmin from './pages/superAdmin';
+import ChangePassword from './pages/changePassword';
 
 // ----------------------------------------------------------------------
 
@@ -21,8 +22,11 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'organizations', element: <Organizations /> },
+        { path: 'keys', element: <ApiKeys /> },
+        { path: 'superAdmin', element: <SuperAdmin /> },
+        { path: 'updatePassword', element: <ChangePassword /> },
+     
       ],
     },
     {
