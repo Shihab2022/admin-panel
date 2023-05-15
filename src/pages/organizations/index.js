@@ -10,6 +10,7 @@ import {
 import Iconify from '../../components/iconify';
 import MainTable from '../../components/table/index';
 import OrganisationData from '../../_mock/organisationData';
+import ServerSidePaginationTable from '../../components/table/test';
 
 
 const TABLE_HEAD = [
@@ -38,13 +39,14 @@ export default function Organizations() {
             Add Organisation
           </Button>
         </Stack>
-        <MainTable
+        {/* <MainTable
         TABLE_HEAD={TABLE_HEAD}
         setOpen={setOpen}
         TABLE_DATA={OrganisationData}
         switchStatus
         placeholder='Search Organisation...'
-        />
+        /> */}
+        <ServerSidePaginationTable/>
       </Container>
 
       <Popover
