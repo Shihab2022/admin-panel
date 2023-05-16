@@ -10,7 +10,7 @@ import {
 import Iconify from '../../components/iconify';
 import MainTable from '../../components/table/index';
 import OrganisationData from '../../_mock/organisationData';
-import ServerSidePaginationTable from '../../components/table/test';
+import ServerSidePaginationTable from '../../components/table/serverTable';
 
 
 const TABLE_HEAD = [

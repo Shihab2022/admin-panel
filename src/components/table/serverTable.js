@@ -24,9 +24,6 @@ const ServerSidePaginationTable = () => {
     { title: 'Year', field: 'year' },
     { title: 'Date', field: 'date' },
     { title: 'Sport', field: 'sport' },
-
-    // { title: "Silver", field: 'silver' },
-    // { title: "Bronze", field: 'bronze' },
     { title: 'Total', field: 'total' },
   ];
 
