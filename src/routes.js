@@ -11,6 +11,7 @@ import ApiKeys from './pages/apiKeys';
 import SuperAdmin from './pages/superAdmin';
 import ChangePassword from './pages/changePassword';
 import PrivateRoute from './privateRoute';
+import LogOut from './pages/logOut';
 
 // ----------------------------------------------------------------------
 
@@ -67,6 +68,10 @@ export default function Router() {
     {
       path: 'login',
       element: <LoginPage />,
+    },
+    {
+      path: 'logOut',
+      element: <LogOut />,
     },
     {
       element: <SimpleLayout />,

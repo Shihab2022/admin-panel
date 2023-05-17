@@ -41,6 +41,11 @@ const navConfig = [
     path: '/login',
     icon: icon('ic_lock'),
   },
+  {
+    title: 'log out',
+    path: '/logOut',
+    icon: icon('ic_lock'),
+  },
 ];
 
 export default navConfig;
