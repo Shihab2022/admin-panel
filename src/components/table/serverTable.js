@@ -52,7 +52,7 @@ const ServerSidePaginationTable = () => {
         icons={tableIcons}
         title="Spatic Data"
         columns={columns}
-        options={{ debounceInterval: 700, paddingY: '10px',paddingX: '5px', pageSizeOptions: [10, 20,30,50,100], pageSize: 10 }}
+        options={{ debounceInterval: 700, paddingY: '10px',paddingX: '5px', pageSizeOptions: [10, 20,30,50,100], pageSize: 10, exportButton: true }}
         data={(query) =>
           new Promise((resolve, reject) => {
             let url = 'http://localhost:3002/olympic?';
