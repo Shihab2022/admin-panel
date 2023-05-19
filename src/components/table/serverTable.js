@@ -1,5 +1,5 @@
 import MaterialTable from 'material-table';
-import { forwardRef, React } from 'react';
+import { forwardRef, React, useEffect, useMemo, useState } from 'react';
 // import AddBox from '@material-ui/icons/AddBox';
 // import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -15,9 +15,11 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 // import ViewColumn from '@material-ui/icons/ViewColumn';
-const ServerSidePaginationTable = () => {
-  const columns = [
-    { title: 'Gold', field: 'gold' },
+const ServerSidePaginationTable = (props) => {
+  const {setOpen,TABLE_HEAD,TABLE_DATA,switchStatus,placeholder,columns,loading, setLoading}=props
+  const [page,setPage]=useState(0)
+  const columnsd = [
+    { title: 'email', field: 'email' },
     { title: "Athlete", field: "athlete" },
     { title: "Age", field: "age" },
     { title: 'Country', field: 'country' },
@@ -25,8 +27,7 @@ const ServerSidePaginationTable = () => {
     { title: 'Date', field: 'date' },
     { title: 'Sport', field: 'sport' },
     { title: 'Total', field: 'total' },
-  ];
-
+  ];;
   const tableIcons = {
     // Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -46,34 +47,36 @@ const ServerSidePaginationTable = () => {
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     // ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
+  const pageSizeHandle=useMemo(()=>{
+    if(TABLE_DATA.length<10 ){
+      return {pageSize:TABLE_DATA.length,pageOption:[TABLE_DATA.length]}
+    }
+    return 10
+},[TABLE_DATA])
   return (
     <>
       <MaterialTable
         icons={tableIcons}
         title="Spatic Data"
         columns={columns}
-        options={{ debounceInterval: 700, paddingY: '10px',paddingX: '5px', pageSizeOptions: [10, 20,30,50,100], pageSize: 10, exportButton: true }}
+        options={{ debounceInterval: 700, paddingY: '10px',paddingX: '5px', pageSizeOptions: pageSizeHandle.pageOption, pageSize: pageSizeHandle.pageSize  }}
         data={(query) =>
           new Promise((resolve, reject) => {
-            let url = 'http://localhost:3002/olympic?';
-            if (query.search) {
-              url += `q=${query.search}`;
-            }
-            if (query.orderBy) {
-              url += `&_sort=${query.orderBy.field}&_order=${query.orderDirection}`;
-            }
-            url += `&_page=${query.page + 1}`;
-            url += `&_limit=${query.pageSize}`;
-
-            fetch(url)
-              .then((resp) => resp.json())
-              .then((resp) => {
+            // console.log('query',query);
+            setPage(query.page + 1)
+            // if (query.search) {
+            //   url += `q=${query.search}`;
+            // }
+            // if (query.orderBy) {
+            //   url += `&_sort=${query.orderBy.field}&_order=${query.orderDirection}`;
+            // }
+            // url += `&_page=${query.page + 1}`;
+            // url += `&_limit=${query.pageSize}`;
                 resolve({
-                  data: resp,
-                  page: query.page,
-                  totalCount: 499,
+                  data: TABLE_DATA,
+                  page,
+                  totalCount: pageSizeHandle.pageSize,
                 });
-              });
           })
         }
       />

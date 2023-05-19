@@ -6,7 +6,7 @@ export const loginUserApi = async (params) => {
       path: "login",
       axiosMethod: "post",
       formData: false,
-      params: params,
+      params,
     });
     return res;
   };
@@ -16,7 +16,17 @@ export const loginUserApi = async (params) => {
       path: "auth/user",
       axiosMethod: "post",
       formData: false,
-      params: params,
+      params,
+    });
+    return res;
+  };
+  export const getUsersApiHandler = async (params) => {
+    const res = await apiHandler({
+      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      path: "auth/users",
+      axiosMethod: "get",
+      formData: false,
+      params,
     });
     return res;
   };
