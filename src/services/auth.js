@@ -50,7 +50,16 @@ export const loginUserApi = async (params) => {
     });
     return res;
   };
-
+  export const confirmOrgApi = async (params) => {
+    const res = await apiHandler({
+      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      path: "auth/update-org",
+      axiosMethod: "post",
+      formData: false,
+      params,
+    });
+    return res;
+  };
   export const apiKeysApi = async (params) => {
     const res = await apiHandler({
       baseURL: process.env.REACT_APP_API_ENDPOINT,

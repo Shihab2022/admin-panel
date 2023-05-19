@@ -9,41 +9,24 @@ import {
   Backdrop,
   CircularProgress,
   Chip,
+  Switch,
 } from '@mui/material';
 import * as moment from 'moment';
 import Iconify from '../../components/iconify';
 import ServerSidePaginationTable from '../../components/table/serverTable';
-import { getOrgsApi } from '../../services/auth';
-import { FAILED, showToast } from '../../components/UI/toast';
+import { confirmOrgApi, getOrgsApi } from '../../services/auth';
+import { FAILED, SUCCESS, showToast } from '../../components/UI/toast'; 
 
-const columns = [
-  { title: 'Name', field: 'name' },
-  { title: 'Email', field: 'email' },
-  {
-    title: 'Create Time',
-    field: 'createdat',
-    render: (rowData) => <p>{moment(rowData.createdat).format('DD/MM/YYYY')}</p>,
-  },
-  {
-    title: 'Status',
-    field: 'accountverified',
-    render: (rowData) => (
-      <Chip
-        label={`${rowData?.accountverified ? 'Verified' : 'Pending'}`}
-        sx={{
-          backgroundColor: `${rowData?.accountverified ? '#54d62c29' : '#ff484229'}`,
-          color: `${rowData?.accountverified ? '#229A16' : '#B72136'}`,
-        }}
-      />
-    ),
-  },
-];
+const SOMETHING_WENT_WRONG="Something went wrong";
+
 export default function Organizations() {
   const [open, setOpen] = useState(null);
   const [orgsData, setOrgsData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const getOrgs = async () => {
+    setLoading(true)
+    setOrgsData([]);
     const { data } = await getOrgsApi({});
     if (data) {
       setOrgsData(data?.data || []);
@@ -59,6 +42,51 @@ export default function Organizations() {
   const handleCloseMenu = () => {
     setOpen(null);
   };
+  const updateOrg = async (name, status) => {
+    try {
+      const res = await confirmOrgApi({ name, status });
+      if (res.success) {
+        showToast(SUCCESS, "Organisation status updated");
+        getOrgs();
+      } else {
+        showToast(FAILED, res.error || SOMETHING_WENT_WRONG);
+      }
+    } catch (error) {
+      showToast(FAILED, SOMETHING_WENT_WRONG);
+    }
+  };
+  const columns = [
+    { title: 'Name', field: 'name' },
+    { title: 'Email', field: 'email' },
+    {
+      title: 'Create Time',
+      field: 'createdat',
+      render: (rowData) => <p>{moment(rowData.createdat).format('DD/MM/YYYY')}</p>,
+    },
+    {
+      title: 'Status',
+      field: 'accountverified',
+      render: (rowData) => (
+        <Chip
+          label={`${rowData?.accountverified ? 'Verified' : 'Pending'}`}
+          sx={{
+            backgroundColor: `${rowData?.accountverified ? '#54d62c29' : '#ff484229'}`,
+            color: `${rowData?.accountverified ? '#229A16' : '#B72136'}`,
+          }}
+        />
+      ),
+    },
+    {
+      title: 'Status',
+      field: 'accountverified',
+      render: (rowData) => (
+        <Switch
+        checked={rowData?.accountverified}
+        onClick={(e) => updateOrg(rowData?.name, e.target.checked)}
+      />
+      ),
+    },
+  ];
   return (
     <>
       <Container>
@@ -66,9 +94,6 @@ export default function Organizations() {
           <Typography variant="h4" gutterBottom>
             Organizations
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Add Organization
-          </Button>
         </Stack>
         {orgsData.length > 0 && <ServerSidePaginationTable TABLE_DATA={orgsData} columns={columns} />}
       </Container>
