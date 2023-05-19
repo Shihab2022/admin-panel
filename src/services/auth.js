@@ -40,3 +40,14 @@ export const loginUserApi = async (params) => {
     });
     return res;
   };
+
+  export const apiKeysApi = async (params) => {
+    const res = await apiHandler({
+      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      path: "api-service/list",
+      axiosMethod: "get",
+      formData: false,
+      params,
+    });
+    return res;
+  };

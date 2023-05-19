@@ -9,7 +9,6 @@ const ServerSidePaginationTable = (props) => {
   const pageSizeHandle = useMemo(() => {
     let pageInfo = {};
     if (TABLE_DATA.length < 10) {
-      console.log(true);
       pageInfo = { pageSize: TABLE_DATA.length, pageOption: [TABLE_DATA.length] };
     } else if (TABLE_DATA.length < 20) {
       pageInfo = { pageSize: 10, pageOption: [10, TABLE_DATA.length] };

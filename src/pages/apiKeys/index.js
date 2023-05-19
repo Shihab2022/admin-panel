@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Stack,
   Button,
@@ -12,22 +12,57 @@ import {
   DialogContentText,
   TextField,
   DialogActions,
+  Backdrop,
+  CircularProgress,
+  Chip,
 } from '@mui/material';
+import * as moment from 'moment';
 import Iconify from '../../components/iconify';
-import MainTable from '../../components/table/index';
-import KeysData from '../../_mock/keysData';
+import { apiKeysApi } from '../../services/auth';
+import ServerSidePaginationTable from '../../components/table/serverTable';
+import { FAILED, showToast } from '../../components/UI/toast';
 
-
-const TABLE_HEAD = [
-  { id: 'keyName', label: 'Key Name', alignRight: false },
-  { id: 'orgName', label: 'Org Name', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
+const columns = [
+  { title: 'Name', field: 'name' },
+  { title: 'Email', field: 'email' },
+  {
+    title: 'Create Time',
+    field: 'created_at',
+    render: (rowData) => <p>{moment(rowData.created_at
+      ).format('DD/MM/YYYY')}</p>,
+  },
+  {
+    title: 'Status',
+    field: 'is_active',
+    render: (rowData) => (
+      <Chip
+        label={`${rowData?.is_active ? 'Active' : 'Inactive'}`}
+        sx={{
+          backgroundColor: `${rowData?.is_active ? '#54d62c29' : '#ff484229'}`,
+          color: `${rowData?.is_active ? '#229A16' : '#B72136'}`,
+        }}
+      />
+    ),
+  },
 ];
 
 export default function ApiKeys() {
     const [open, setOpen] = useState(null);
     const [modal,setModal]=useState(false)
+    const [kpiData, setKpiData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const getApiKeys = async (p) => {
+      const { data } = await apiKeysApi(p);
+      if (data) {
+        setKpiData(data?.data || []);
+      } else {
+        showToast(FAILED, "Something went wrong");
+      }
+      setLoading(false);
+    };
+    useEffect(() => {
+      getApiKeys({ offset: 0, limit: 100 });
+    }, []);
     const handleCloseMenu = () => {
         setOpen(null);
       };
@@ -45,12 +80,7 @@ export default function ApiKeys() {
             Add Keys
           </Button>
         </Stack>
-        <MainTable
-        TABLE_HEAD={TABLE_HEAD}
-        setOpen={setOpen}
-        TABLE_DATA={KeysData}
-        placeholder='Search Keys...'
-        />
+         {kpiData.length > 0 && <ServerSidePaginationTable TABLE_DATA={kpiData} columns={columns} />}
       </Container>
 
       <Popover
@@ -102,6 +132,9 @@ export default function ApiKeys() {
           <Button onClick={handleClose}>Add Keys</Button>
         </DialogActions>
       </Dialog>
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }
