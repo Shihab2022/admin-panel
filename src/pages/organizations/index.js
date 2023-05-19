@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Stack,
   Button,
@@ -6,47 +6,69 @@ import {
   MenuItem,
   Container,
   Typography,
+  Backdrop,
+  CircularProgress,
+  Chip,
 } from '@mui/material';
+import * as moment from 'moment';
 import Iconify from '../../components/iconify';
-import MainTable from '../../components/table/index';
-import OrganisationData from '../../_mock/organisationData';
 import ServerSidePaginationTable from '../../components/table/serverTable';
+import { getOrgsApi } from '../../services/auth';
+import { FAILED, showToast } from '../../components/UI/toast';
 
-
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
-  { id: 'orgName', label: 'Org Name', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
-  { id: '' },
+const columns = [
+  { title: 'Name', field: 'name' },
+  { title: 'Email', field: 'email' },
+  {
+    title: 'Create Time',
+    field: 'createdat',
+    render: (rowData) => <p>{moment(rowData.createdat).format('DD/MM/YYYY')}</p>,
+  },
+  {
+    title: 'Status',
+    field: 'accountverified',
+    render: (rowData) => (
+      <Chip
+        label={`${rowData?.accountverified ? 'accepted' : 'Pending'}`}
+        sx={{
+          backgroundColor: `${rowData?.accountverified ? '#54d62c29' : '#ff484229'}`,
+          color: `${rowData?.accountverified ? '#229A16' : '#B72136'}`,
+        }}
+      />
+    ),
+  },
 ];
-
 export default function Organizations() {
-    const [open, setOpen] = useState(null);
-    const handleCloseMenu = () => {
-        setOpen(null);
-      };
+  const [open, setOpen] = useState(null);
+  const [orgsData, setOrgsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getOrgs = async () => {
+    const { data } = await getOrgsApi({});
+    if (data) {
+      setOrgsData(data?.data || []);
+    } else {
+      showToast(FAILED, 'Something went wrong');
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => [getOrgs()], []);
+  const handleCloseMenu = () => {
+    setOpen(null);
+  };
   return (
     <>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-          Organisations
+            Organisations
           </Typography>
           <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
             Add Organisation
           </Button>
         </Stack>
-        {/* <MainTable
-        TABLE_HEAD={TABLE_HEAD}
-        setOpen={setOpen}
-        TABLE_DATA={OrganisationData}
-        switchStatus
-        placeholder='Search Organisation...'
-        /> */}
-        <ServerSidePaginationTable/>
+        {orgsData.length > 0 && <ServerSidePaginationTable TABLE_DATA={orgsData} columns={columns} />}
       </Container>
 
       <Popover
@@ -67,14 +89,13 @@ export default function Organizations() {
           },
         }}
       >
-        <MenuItem>
-          Resend Mail
-        </MenuItem>
+        <MenuItem>Resend Mail</MenuItem>
 
-        <MenuItem sx={{ color: 'error.main' }}>
-          Delete
-        </MenuItem>
+        <MenuItem sx={{ color: 'error.main' }}>Delete</MenuItem>
       </Popover>
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }

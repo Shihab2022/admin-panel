@@ -11,22 +11,9 @@ import {
   Chip,
 } from '@mui/material';
 import Iconify from '../../components/iconify';
-import MainTable from '../../components/table/index';
-import users from '../../_mock/user';
 import { getUsersApiHandler } from '../../services/auth';
 import { FAILED, showToast } from '../../components/UI/toast';
 import ServerSidePaginationTable from '../../components/table/serverTable';
-// import { FAILED, showToast } from 'src/components/UI/toast';
-
-
-const TABLE_HEAD = [
-  { id: 'firstName', label: 'First Name', alignRight: false },
-  { id: 'lastName', label: 'Last Name', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  // { id: '' },
-];
 
 export default function UserPage() {
     const [open, setOpen] = useState(null);
@@ -71,8 +58,6 @@ export default function UserPage() {
         {userData.length>0&&<ServerSidePaginationTable
         TABLE_DATA={userData}
         columns={columns}
-        loading={loading}
-          setLoading={setLoading}
         />}
       </Container>
 
