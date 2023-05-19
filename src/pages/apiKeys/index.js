@@ -123,6 +123,18 @@ const ManageApiKeys = () => {
   const [loading, setLoading] = useState(true);
   const [addedKey, setAddedKey] = useState({ name: "", key: "" });
 
+
+
+  const getApiKeys = async (p) => {
+    setUsers([])
+    const { data } = await apiKeysApi(p);
+    if (data) {
+      setUsers(data?.data || []);
+    } else {
+      showToast(FAILED, "Something went wrong");
+    }
+    setLoading(false);
+  };
   const addKey = async (email, name) => {
     try {
       setLoading(true);
@@ -137,6 +149,7 @@ const ManageApiKeys = () => {
           name,
           info: data?.data?.info,
         });
+        getApiKeys({ offset: 0, limit: 100 });
         showToast(SUCCESS, "Mail sent");
       } else {
         showToast(FAILED, data.error || "Something went wrong");
@@ -146,16 +159,6 @@ const ManageApiKeys = () => {
       setLoading(false);
       showToast(FAILED, "Something went wrong");
     }
-  };
-
-  const getApiKeys = async (p) => {
-    const { data } = await apiKeysApi(p);
-    if (data) {
-      setUsers(data?.data || []);
-    } else {
-      showToast(FAILED, "Something went wrong");
-    }
-    setLoading(false);
   };
   useEffect(() => {
     getApiKeys({ offset: 0, limit: 100 });
@@ -170,10 +173,10 @@ const ManageApiKeys = () => {
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Organizations
+            Keys
           </Typography>
           <Button onClick={() => setShowModal(true)} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Add Organization
+            Add Keys
           </Button>
         </Stack>
       {addedKey?.key && (
