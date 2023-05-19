@@ -30,6 +30,16 @@ export const loginUserApi = async (params) => {
     });
     return res;
   };
+  export const changePasswordApi = async (params) => {
+    const res = await apiHandler({
+      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      path: "auth/change-password",
+      axiosMethod: "post",
+      formData: false,
+      params,
+    });
+    return res;
+  };
   export const getOrgsApi = async (params) => {
     const res = await apiHandler({
       baseURL: process.env.REACT_APP_API_ENDPOINT,
@@ -46,6 +56,16 @@ export const loginUserApi = async (params) => {
       baseURL: process.env.REACT_APP_API_ENDPOINT,
       path: "api-service/list",
       axiosMethod: "get",
+      formData: false,
+      params,
+    });
+    return res;
+  };
+  export const addApiKeyApi = async (params) => {
+    const res = await apiHandler({
+      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      path: "api-service/add",
+      axiosMethod: "post",
       formData: false,
       params,
     });

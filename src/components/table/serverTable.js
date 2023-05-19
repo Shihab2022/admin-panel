@@ -21,7 +21,7 @@ const ServerSidePaginationTable = (props) => {
     <>
       <MaterialTable
         icons={TableIcons}
-        title="Spatic Data"
+        title=""
         columns={columns}
         options={{
           debounceInterval: 700,
