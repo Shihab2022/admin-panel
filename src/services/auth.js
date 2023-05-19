@@ -51,3 +51,13 @@ export const loginUserApi = async (params) => {
     });
     return res;
   };
+  export const getSuperUsersApi = async (params) => {
+    const res = await apiHandler({
+      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      path: "auth/super-users",
+      axiosMethod: "get",
+      formData: false,
+      params,
+    });
+    return res;
+  };
