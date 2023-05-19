@@ -10,6 +10,8 @@ import Organizations from './pages/organizations';
 import ApiKeys from './pages/apiKeys';
 import SuperAdmin from './pages/superAdmin';
 import ChangePassword from './pages/changePassword';
+import PrivateRoute from './privateRoute';
+import LogOut from './pages/logOut';
 
 // ----------------------------------------------------------------------
 
@@ -20,18 +22,56 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
-        { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
-        { path: 'organizations', element: <Organizations /> },
-        { path: 'keys', element: <ApiKeys /> },
-        { path: 'superAdmin', element: <SuperAdmin /> },
+        {
+          path: 'app',
+          element: (
+            <PrivateRoute>
+              <DashboardAppPage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: 'user',
+          element: (
+            <PrivateRoute>
+              <UserPage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: 'organizations',
+          element: (
+            <PrivateRoute>
+              <Organizations />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: 'keys',
+          element: (
+            <PrivateRoute>
+              <ApiKeys />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: 'superAdmin',
+          element: (
+            <PrivateRoute>
+              <SuperAdmin />
+            </PrivateRoute>
+          ),
+        },
         { path: 'updatePassword', element: <ChangePassword /> },
-     
       ],
     },
     {
       path: 'login',
       element: <LoginPage />,
+    },
+    {
+      path: 'logOut',
+      element: <LogOut />,
     },
     {
       element: <SimpleLayout />,

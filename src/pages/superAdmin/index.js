@@ -1,6 +1,4 @@
-
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Stack,
   Button,
@@ -8,44 +6,66 @@ import {
   MenuItem,
   Container,
   Typography,
+  Backdrop,
+  CircularProgress,
+  Chip,
 } from '@mui/material';
 import Iconify from '../../components/iconify';
-import MainTable from '../../components/table/index';
-// import KeysData from '../../_mock/keysData';
-import SuperAdminData from '../../_mock/superAdminData';
+import { getSuperUsersApi } from '../../services/auth';
+import { FAILED, showToast } from '../../components/UI/toast';
+import ServerSidePaginationTable from '../../components/table/serverTable';
 
-
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'email', label: 'Eamil', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'changeRole', label: 'Change Role', alignRight: false },
-  { id: '' },
+const columns = [
+  { title: 'First Name', field: 'firstname' },
+  { title: 'Last Name', field: 'lastname' },
+  { title: 'Email', field: 'email' },
+  { title: 'Role', field: 'role' },
+  {
+    title: 'Status',
+    field: 'inviteaccepted',
+    render: (rowData) => (
+      <Chip
+        label={`${rowData?.inviteaccepted ? 'accepted' : 'Pending'}`}
+        sx={{
+          backgroundColor: `${rowData?.inviteaccepted ? '#54d62c29' : '#ff484229'}`,
+          color: `${rowData?.inviteaccepted ? '#229A16' : '#B72136'}`,
+        }}
+      />
+    ),
+  },
 ];
 
 export default function SuperAdmin() {
-    const [open, setOpen] = useState(null);
-    const handleCloseMenu = () => {
-        setOpen(null);
-      };
+  const [open, setOpen] = useState(null);
+  const [superAdmins, setSuperAdmins] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const getUsers = async () => {
+    const { data } = await getSuperUsersApi({});
+    if (data) {
+      setSuperAdmins(data?.data || []);
+    } else {
+      showToast(FAILED, 'Something went wrong');
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    getUsers();
+  }, []);
+  const handleCloseMenu = () => {
+    setOpen(null);
+  };
   return (
     <>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-          Hi, Welcome back  Admin Page
+            Hi, Welcome back Admin Page
           </Typography>
-          <Button  variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
             Add Admin
           </Button>
         </Stack>
-        <MainTable
-        TABLE_HEAD={TABLE_HEAD}
-        setOpen={setOpen}
-        TABLE_DATA={SuperAdminData}
-        switchStatus
-        placeholder='Search Keys...'
-        />
+        {superAdmins.length > 0 && <ServerSidePaginationTable TABLE_DATA={superAdmins} columns={columns} />}
       </Container>
 
       <Popover
@@ -66,14 +86,13 @@ export default function SuperAdmin() {
           },
         }}
       >
-        <MenuItem>
-          Resend Mail
-        </MenuItem>
+        <MenuItem>Resend Mail</MenuItem>
 
-        <MenuItem sx={{ color: 'error.main' }}>
-          Delete
-        </MenuItem>
+        <MenuItem sx={{ color: 'error.main' }}>Delete</MenuItem>
       </Popover>
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }
