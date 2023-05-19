@@ -40,7 +40,6 @@ export default function UserPage() {
             backgroundColor: `${rowData?.inviteaccepted ? '#54d62c29' : '#ff484229'}`,
             color: `${rowData?.inviteaccepted ? '#229A16' : '#B72136'}`,
           }}
-          onClick={handleClick}
         />
       ),
     },
