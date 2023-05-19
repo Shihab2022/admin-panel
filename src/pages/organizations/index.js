@@ -29,7 +29,7 @@ const columns = [
     field: 'accountverified',
     render: (rowData) => (
       <Chip
-        label={`${rowData?.accountverified ? 'accepted' : 'Pending'}`}
+        label={`${rowData?.accountverified ? 'Verified' : 'Pending'}`}
         sx={{
           backgroundColor: `${rowData?.accountverified ? '#54d62c29' : '#ff484229'}`,
           color: `${rowData?.accountverified ? '#229A16' : '#B72136'}`,
@@ -53,7 +53,9 @@ export default function Organizations() {
     setLoading(false);
   };
 
-  useEffect(() => [getOrgs()], []);
+  useEffect(() => {
+    getOrgs()
+  }, []);
   const handleCloseMenu = () => {
     setOpen(null);
   };
@@ -62,10 +64,10 @@ export default function Organizations() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Organisations
+            Organizations
           </Typography>
           <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Add Organisation
+            Add Organization
           </Button>
         </Stack>
         {orgsData.length > 0 && <ServerSidePaginationTable TABLE_DATA={orgsData} columns={columns} />}

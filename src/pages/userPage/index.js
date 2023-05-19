@@ -35,7 +35,7 @@ export default function UserPage() {
       field: 'inviteaccepted',
       render: (rowData) => (
         <Chip
-          label={`${rowData?.inviteaccepted ? 'accepted' : 'Pending'}`}
+          label={`${rowData?.inviteaccepted ? 'Accepted' : 'Pending'}`}
           sx={{
             backgroundColor: `${rowData?.inviteaccepted ? '#54d62c29' : '#ff484229'}`,
             color: `${rowData?.inviteaccepted ? '#229A16' : '#B72136'}`,
