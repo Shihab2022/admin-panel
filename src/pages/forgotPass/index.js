@@ -1,9 +1,9 @@
 import { styled } from '@mui/material/styles';
-import { Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import useResponsive from '../hooks/useResponsive';
-import { LoginForm } from '../sections/auth/login';
-import logo from '../assets/logo-light.png';
+import logo from '../../assets/logo-light.png';
+import useResponsive from '../../hooks/useResponsive';
+import ForgotForm from './ForgotForm';
 
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -59,7 +59,13 @@ export default function LoginPage() {
         )}
         <Container maxWidth="sm">
           <StyledContent>
-            <LoginForm />
+            <Box sx={{ marginBottom: '20px' }}>
+              <Typography variant="h6">Forgot Password</Typography>
+              <Typography variant="p" sx={{ fontSize: '14px' }}>
+                Enter your details below.
+              </Typography>
+            </Box>
+            <ForgotForm />
           </StyledContent>
         </Container>
       </StyledRoot>

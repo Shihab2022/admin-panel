@@ -90,3 +90,13 @@ export const loginUserApi = async (params) => {
     });
     return res;
   };
+  export const forgotPasswordApi = async (params) => {
+    const res = await apiHandler({
+      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      path: "auth/forgot-password",
+      axiosMethod: "post",
+      formData: false,
+       params,
+    });
+    return res;
+  };

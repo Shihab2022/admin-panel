@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox, FormControlLabel } from '@mui/material';
+import {Stack, IconButton, InputAdornment, TextField, Checkbox, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
 import Iconify from '../../../components/iconify';
@@ -85,7 +85,7 @@ export default function LoginForm() {
               control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
               label="Remember me"
             />
-            <Link variant="subtitle2" underline="hover">
+            <Link to='/forgot-password'  underline="hover">
               Forgot password?
             </Link>
           </Stack>

@@ -12,6 +12,7 @@ import SuperAdmin from './pages/superAdmin';
 import ChangePassword from './pages/changePassword';
 import PrivateRoute from './privateRoute';
 import LogOut from './pages/logOut';
+import ForgotPassword from './pages/forgotPass';
 
 // ----------------------------------------------------------------------
 
@@ -73,6 +74,7 @@ export default function Router() {
       path: 'logOut',
       element: <LogOut />,
     },
+    { path: "forgot-password", element: <ForgotPassword /> },
     {
       element: <SimpleLayout />,
       children: [

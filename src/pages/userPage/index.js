@@ -22,9 +22,6 @@ export default function UserPage() {
   const handleCloseMenu = () => {
     setOpen(null);
   };
-  const handleClick = () => {
-    console.log('hello');
-  };
   const columns = [
     { title: 'First Name', field: 'firstname' },
     { title: 'Last Name', field: 'lastname' },
