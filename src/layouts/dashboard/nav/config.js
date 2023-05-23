@@ -1,4 +1,8 @@
 // component
+import CorporateFareIcon from '@mui/icons-material/CorporateFare';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import ApiIcon from '@mui/icons-material/Api';
+import LockResetIcon from '@mui/icons-material/LockReset';
 import SvgColor from '../../../components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -12,34 +16,30 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'user',
+    title: 'Organizations',
+    path: '/dashboard/organizations',
+    icon: <CorporateFareIcon/>,
+  },
+  {
+    title: 'User',
     path: '/dashboard/user',
     icon: icon('ic_user'),
   },
-  {
-    title: 'Organizations',
-    path: '/dashboard/organizations',
-    icon: icon('ic_blog'),
-  },
+
   {
     title: 'Api keys',
     path: '/dashboard/keys',
-    icon: icon('ic_blog'),
+    icon: <ApiIcon/>,
   },
   {
     title: 'Super Admin',
     path: '/dashboard/superAdmin',
-    icon: icon('ic_blog'),
+    icon: <AdminPanelSettingsIcon/>,
   },
   {
     title: 'Change Password',
     path: '/dashboard/updatePassword',
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
+    icon: <LockResetIcon/>,
   },
 ];
 

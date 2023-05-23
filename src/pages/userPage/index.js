@@ -54,7 +54,7 @@ export default function UserPage() {
     {
       title: 'Action',
       field: 'inviteaccepted',
-      render: (rowData) => (
+      render: () => (
       <Button variant="contained" onClick={()=>inviteUserApi({ ...user, resendInvite: true })}>
         Resend Mail
       </Button>

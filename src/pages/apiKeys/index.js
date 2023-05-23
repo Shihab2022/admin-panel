@@ -19,6 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addApiKeyApi, apiKeysApi} from '../../services/auth';
@@ -206,7 +207,7 @@ const ManageApiKeys = () => {
               style={{}}
             >
               <Button color="primary" variant="text">
-                Download
+                <ArrowDownwardIcon sx={{color:'#637381'}}/>
               </Button>
             </CSVLink>
           </AlertTitle>
