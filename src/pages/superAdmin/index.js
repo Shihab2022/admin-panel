@@ -11,10 +11,12 @@ import {
   Chip,
 } from '@mui/material';
 import Iconify from '../../components/iconify';
-import { getSuperUsersApi } from '../../services/auth';
-import { FAILED, showToast } from '../../components/UI/toast';
+import { getSuperUsersApi, inviteSuperUserApi } from '../../services/auth';
+import { FAILED, SUCCESS, showToast } from '../../components/UI/toast';
 import ServerSidePaginationTable from '../../components/table/serverTable';
+import FormDialog from './dialogForm';
 
+const SOMETHING_WENT_WRONG="Something went wrong"
 const columns = [
   { title: 'First Name', field: 'firstname' },
   { title: 'Last Name', field: 'lastname' },
@@ -37,14 +39,33 @@ const columns = [
 
 export default function SuperAdmin() {
   const [open, setOpen] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [superAdmins, setSuperAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const inviteUser = async (email) => {
+    try {
+      setLoading(true);
+      setShowModal(false);
+      const { success, data } = await inviteSuperUserApi({ email });
+      if (success) {
+        setSuperAdmins([{ email }, ...superAdmins]);
+        showToast(SUCCESS, "Mail sent");
+      } else {
+        showToast(FAILED, data.error ||SOMETHING_WENT_WRONG );
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      showToast(FAILED, SOMETHING_WENT_WRONG);
+    }
+  };
   const getUsers = async () => {
     const { data } = await getSuperUsersApi({});
     if (data) {
       setSuperAdmins(data?.data || []);
     } else {
-      showToast(FAILED, 'Something went wrong');
+      showToast(FAILED, SOMETHING_WENT_WRONG);
     }
     setLoading(false);
   };
@@ -61,7 +82,7 @@ export default function SuperAdmin() {
           <Typography variant="h4" gutterBottom>
             Hi, Welcome back Admin Page
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button onClick={()=>setShowModal(true)} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
             Add Admin
           </Button>
         </Stack>
@@ -90,6 +111,13 @@ export default function SuperAdmin() {
 
         <MenuItem sx={{ color: 'error.main' }}>Delete</MenuItem>
       </Popover>
+      {showModal && (
+        <FormDialog
+          open={showModal}
+          submit={({ email }) => inviteUser(email)}
+          setOpen={setShowModal}
+        />
+      )}
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
