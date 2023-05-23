@@ -1,4 +1,8 @@
 // component
+import CorporateFareIcon from '@mui/icons-material/CorporateFare';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import ApiIcon from '@mui/icons-material/Api';
+import LockResetIcon from '@mui/icons-material/LockReset';
 import SvgColor from '../../../components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -6,45 +10,36 @@ import SvgColor from '../../../components/svg-color';
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
 const navConfig = [
+  // {
+  //   title: 'dashboard',
+  //   path: '/dashboard/app',
+  //   icon: icon('ic_analytics'),
+  // },
   {
-    title: 'dashboard',
+    title: 'Organizations',
     path: '/dashboard/app',
-    icon: icon('ic_analytics'),
+    icon: <CorporateFareIcon/>,
   },
   {
-    title: 'user',
+    title: 'User',
     path: '/dashboard/user',
     icon: icon('ic_user'),
   },
-  {
-    title: 'Organizations',
-    path: '/dashboard/organizations',
-    icon: icon('ic_blog'),
-  },
+
   {
     title: 'Api keys',
     path: '/dashboard/keys',
-    icon: icon('ic_blog'),
+    icon: <ApiIcon/>,
   },
   {
     title: 'Super Admin',
     path: '/dashboard/superAdmin',
-    icon: icon('ic_blog'),
+    icon: <AdminPanelSettingsIcon/>,
   },
   {
     title: 'Change Password',
     path: '/dashboard/updatePassword',
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'log out',
-    path: '/logOut',
-    icon: icon('ic_lock'),
+    icon: <LockResetIcon/>,
   },
 ];
 

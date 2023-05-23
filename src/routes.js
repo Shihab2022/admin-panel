@@ -1,19 +1,16 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-// layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 import UserPage from './pages/userPage/index';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import DashboardAppPage from './pages/DashboardAppPage';
 import Organizations from './pages/organizations';
 import ApiKeys from './pages/apiKeys';
 import SuperAdmin from './pages/superAdmin';
 import ChangePassword from './pages/changePassword';
 import PrivateRoute from './privateRoute';
-import LogOut from './pages/logOut';
+import ForgotPassword from './pages/forgotPass';
 
-// ----------------------------------------------------------------------
 
 export default function Router() {
   const routes = useRoutes([
@@ -26,7 +23,7 @@ export default function Router() {
           path: 'app',
           element: (
             <PrivateRoute>
-              <DashboardAppPage />
+               <Organizations />
             </PrivateRoute>
           ),
         },
@@ -35,14 +32,6 @@ export default function Router() {
           element: (
             <PrivateRoute>
               <UserPage />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: 'organizations',
-          element: (
-            <PrivateRoute>
-              <Organizations />
             </PrivateRoute>
           ),
         },
@@ -69,10 +58,7 @@ export default function Router() {
       path: 'login',
       element: <LoginPage />,
     },
-    {
-      path: 'logOut',
-      element: <LogOut />,
-    },
+    { path: "forgot-password", element: <ForgotPassword /> },
     {
       element: <SimpleLayout />,
       children: [
