@@ -4,18 +4,15 @@ import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
-// mock
+import { useSelector } from 'react-redux';
 import account from '../../../_mock/account';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
-// components
 import Logo from '../../../assets/logo-light.png';
 import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
-//
 import navConfig from './config';
 
-// ----------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
 
@@ -27,8 +24,6 @@ const StyledAccount = styled('div')(({ theme }) => ({
   backgroundColor: alpha(theme.palette.grey[500], 0.12),
 }));
 
-// ----------------------------------------------------------------------
-
 Nav.propTypes = {
   openNav: PropTypes.bool,
   onCloseNav: PropTypes.func,
@@ -36,7 +31,7 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
-
+  const user = useSelector((state) => state.user.info);
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
@@ -64,11 +59,7 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
-              </Typography>
-
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+              {user?.firstname}
               </Typography>
             </Box>
           </StyledAccount>

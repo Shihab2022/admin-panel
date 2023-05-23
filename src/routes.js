@@ -1,5 +1,4 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-// layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 import UserPage from './pages/userPage/index';
@@ -11,10 +10,8 @@ import ApiKeys from './pages/apiKeys';
 import SuperAdmin from './pages/superAdmin';
 import ChangePassword from './pages/changePassword';
 import PrivateRoute from './privateRoute';
-import LogOut from './pages/logOut';
 import ForgotPassword from './pages/forgotPass';
 
-// ----------------------------------------------------------------------
 
 export default function Router() {
   const routes = useRoutes([
@@ -69,10 +66,6 @@ export default function Router() {
     {
       path: 'login',
       element: <LoginPage />,
-    },
-    {
-      path: 'logOut',
-      element: <LogOut />,
     },
     { path: "forgot-password", element: <ForgotPassword /> },
     {
