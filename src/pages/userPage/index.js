@@ -51,6 +51,15 @@ export default function UserPage() {
         />
       ),
     },
+    {
+      title: 'Action',
+      field: 'inviteaccepted',
+      render: (rowData) => (
+      <Button variant="contained" onClick={()=>inviteUserApi({ ...user, resendInvite: true })}>
+        Resend Mail
+      </Button>
+      ),
+    },
   ];
 
   const inviteUser = async ({ email, resendInvite }) => {
