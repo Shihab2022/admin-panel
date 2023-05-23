@@ -4,7 +4,6 @@ import SimpleLayout from './layouts/simple';
 import UserPage from './pages/userPage/index';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import DashboardAppPage from './pages/DashboardAppPage';
 import Organizations from './pages/organizations';
 import ApiKeys from './pages/apiKeys';
 import SuperAdmin from './pages/superAdmin';
@@ -24,7 +23,7 @@ export default function Router() {
           path: 'app',
           element: (
             <PrivateRoute>
-              <DashboardAppPage />
+               <Organizations />
             </PrivateRoute>
           ),
         },
@@ -33,14 +32,6 @@ export default function Router() {
           element: (
             <PrivateRoute>
               <UserPage />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: 'organizations',
-          element: (
-            <PrivateRoute>
-              <Organizations />
             </PrivateRoute>
           ),
         },
