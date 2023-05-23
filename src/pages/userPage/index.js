@@ -10,15 +10,26 @@ import {
   CircularProgress,
   Chip,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Iconify from '../../components/iconify';
-import { getUsersApiHandler } from '../../services/auth';
-import { FAILED, showToast } from '../../components/UI/toast';
+import { getUsersApiHandler, inviteUserApi } from '../../services/auth';
+import { FAILED, SUCCESS, showToast } from '../../components/UI/toast';
 import ServerSidePaginationTable from '../../components/table/serverTable';
+import FormDialog from './dialogForm';
+
 
 export default function UserPage() {
+  const user = useSelector((state) => state.user.info);
+  const navigate = useNavigate();
+  if (user && !["admin", "superadmin"].includes(user?.role)) {
+    navigate("/");
+  }
+  const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(null);
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const handleCloseMenu = () => {
     setOpen(null);
   };
@@ -41,6 +52,30 @@ export default function UserPage() {
       ),
     },
   ];
+
+  const inviteUser = async ({ email, resendInvite }) => {
+    try {
+      setLoading(true);
+      setShowModal(false);
+      const { success, data } = await inviteUserApi({
+        email,
+        resendInvite,
+      });
+      if (success) {
+        if (!resendInvite) {
+          setUsers([{ email }, ...users]);
+        }
+        showToast(SUCCESS, "Mail sent");
+      } else {
+        showToast(FAILED, data.error || "Something went wrong");
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      showToast(FAILED, "Something went wrong");
+    }
+  };
+
   const getUsers = async () => {
     const { data } = await getUsersApiHandler({});
     if (data) {
@@ -60,7 +95,7 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             User
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button onClick={()=>setShowModal(true)} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
             Add User
           </Button>
         </Stack>
@@ -89,6 +124,14 @@ export default function UserPage() {
 
         <MenuItem sx={{ color: 'error.main' }}>Delete</MenuItem>
       </Popover>
+
+      {showModal && (
+        <FormDialog
+          open={showModal}
+          submit={({ email }) => inviteUser({ email })}
+          setOpen={setShowModal}
+        />
+      )}
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>

@@ -100,6 +100,16 @@ export const loginUserApi = async (params) => {
     });
     return res;
   };
+  export const inviteUserApi = async (params) => {
+    const res = await apiHandler({
+      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      path: "auth/invite",
+      axiosMethod: "post",
+      formData: false,
+      params,
+    });
+    return res;
+  };
   export const inviteSuperUserApi = async (params) => {
     const res = await apiHandler({
       baseURL: process.env.REACT_APP_API_ENDPOINT,
