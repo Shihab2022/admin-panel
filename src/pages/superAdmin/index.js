@@ -61,6 +61,7 @@ export default function SuperAdmin() {
     }
   };
   const getUsers = async () => {
+    setSuperAdmins([]);
     const { data } = await getSuperUsersApi({});
     if (data) {
       setSuperAdmins(data?.data || []);
@@ -83,7 +84,7 @@ export default function SuperAdmin() {
             Hi, Welcome back Admin Page
           </Typography>
           <Button onClick={()=>setShowModal(true)} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Add Admin
+            Add Super Admin
           </Button>
         </Stack>
         {superAdmins.length > 0 && <ServerSidePaginationTable TABLE_DATA={superAdmins} columns={columns} />}
