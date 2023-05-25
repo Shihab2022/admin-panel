@@ -32,16 +32,7 @@ const ServerSidePaginationTable = (props) => {
         }}
         data={(query) =>
           new Promise((resolve, reject) => {
-            // console.log('query',query);
-            setPage(query.page + 1);
-            // if (query.search) {
-            //   url += `q=${query.search}`;
-            // }
-            // if (query.orderBy) {
-            //   url += `&_sort=${query.orderBy.field}&_order=${query.orderDirection}`;
-            // }
-            // url += `&_page=${query.page + 1}`;
-            // url += `&_limit=${query.pageSize}`;
+            setPage(query.page);
             resolve({
               data: TABLE_DATA,
               page: query.page,

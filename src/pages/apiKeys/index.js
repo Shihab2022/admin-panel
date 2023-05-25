@@ -123,10 +123,7 @@ const ManageApiKeys = () => {
   const [loading, setLoading] = useState(true);
   const [addedKey, setAddedKey] = useState({ name: "", key: "" });
 
-
-
   const getApiKeys = async (p) => {
-    setKeys([])
     const { data } = await apiKeysApi(p);
     if (data) {
       setKeys(data?.data || []);
@@ -136,8 +133,9 @@ const ManageApiKeys = () => {
     setLoading(false);
   };
   const addKey = async (email, name) => {
+    setLoading(true);
     try {
-      setLoading(true);
+      setKeys([])
       setShowModal(false);
       const { success, data } = await addApiKeyApi({ email, name });
       if (success) {
@@ -149,21 +147,19 @@ const ManageApiKeys = () => {
           name,
           info: data?.data?.info,
         });
-        getApiKeys({ offset: 0, limit: 100 });
+        setKeys(current => [...current, data?.data?.info]);
         showToast(SUCCESS, "Mail sent");
       } else {
         showToast(FAILED, data.error || "Something went wrong");
       }
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       showToast(FAILED, "Something went wrong");
     }
+    setLoading(false);
   };
   useEffect(() => {
     getApiKeys({ offset: 0, limit: 100 });
   }, []);
-
   const copyToClipboard = (val) => {
     navigator.clipboard.writeText(val);
     showToast(SUCCESS, "Copied");
