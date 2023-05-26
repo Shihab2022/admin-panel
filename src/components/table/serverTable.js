@@ -4,7 +4,8 @@ import { TableIcons } from './tableIcon';
 
 const ServerSidePaginationTable = (props) => {
   const { TABLE_DATA, columns } = props;
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(0);
 
   const pageSizeHandle = useMemo(() => {
     let pageInfo = {};
@@ -15,6 +16,7 @@ const ServerSidePaginationTable = (props) => {
     } else {
       pageInfo = { pageSize: 10, pageOption: [10, 20, 30, 50] };
     }
+    setPageSize(pageInfo?.pageSize)
     return pageInfo;
   }, [TABLE_DATA]);
   return (
@@ -30,16 +32,9 @@ const ServerSidePaginationTable = (props) => {
           pageSizeOptions: pageSizeHandle.pageOption,
           pageSize: pageSizeHandle.pageSize,
         }}
-        data={(query) =>
-          new Promise((resolve, reject) => {
-            setPage(query.page);
-            resolve({
-              data: TABLE_DATA,
-              page: query.page,
-              totalCount: TABLE_DATA.length,
-            });
-          })
-        }
+        data={TABLE_DATA}
+        onChangePage={(newPage) => setPage(newPage)}
+        onChangeRowsPerPage={(pageSize)=>setPageSize(pageSize)}
       />
     </>
   );
