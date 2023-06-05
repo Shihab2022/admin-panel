@@ -50,7 +50,7 @@ const columns = [
     ),
   },
 ];
-const validateEmail = (email) => {
+function validateEmail(email)  {
   return email.match(
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   );
@@ -118,52 +118,48 @@ const ManageApiKeys = () => {
   if (user && !["admin", "superadmin"].includes(user?.role)) {
     navigate("/");
   }
-  const [users, setUsers] = useState([]);
+  const [keys, setKeys] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [addedKey, setAddedKey] = useState({ name: "", key: "" });
 
-
-
   const getApiKeys = async (p) => {
-    setUsers([])
     const { data } = await apiKeysApi(p);
     if (data) {
-      setUsers(data?.data || []);
+      setKeys(data?.data || []);
     } else {
       showToast(FAILED, "Something went wrong");
     }
     setLoading(false);
   };
   const addKey = async (email, name) => {
+    setLoading(true);
     try {
-      setLoading(true);
+      setKeys([])
       setShowModal(false);
       const { success, data } = await addApiKeyApi({ email, name });
       if (success) {
-        const temp = [...users];
+        const temp = [...keys];
         temp.unshift(data?.data?.info);
-        setUsers(temp);
+        setKeys(temp);
         setAddedKey({
           key: data?.data?.key,
           name,
           info: data?.data?.info,
         });
-        getApiKeys({ offset: 0, limit: 100 });
+        setKeys(current => [...current, data?.data?.info]);
         showToast(SUCCESS, "Mail sent");
       } else {
         showToast(FAILED, data.error || "Something went wrong");
       }
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       showToast(FAILED, "Something went wrong");
     }
+    setLoading(false);
   };
   useEffect(() => {
     getApiKeys({ offset: 0, limit: 100 });
   }, []);
-
   const copyToClipboard = (val) => {
     navigator.clipboard.writeText(val);
     showToast(SUCCESS, "Copied");
@@ -213,7 +209,7 @@ const ManageApiKeys = () => {
           </AlertTitle>
         </Alert>
       )}
-        {users.length > 0 && <ServerSidePaginationTable TABLE_DATA={users} columns={columns} />}
+        {keys.length > 0 && <ServerSidePaginationTable TABLE_DATA={keys} columns={columns} />}
       {showModal && (
         <FormDialog
           open={showModal}

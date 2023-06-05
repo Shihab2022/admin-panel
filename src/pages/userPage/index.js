@@ -86,6 +86,7 @@ export default function UserPage() {
   };
 
   const getUsers = async () => {
+    setUserData([]);
     const { data } = await getUsersApiHandler({});
     if (data) {
       setUserData(data.data);

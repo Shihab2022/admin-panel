@@ -17,7 +17,7 @@ const navConfig = [
   // },
   {
     title: 'Organizations',
-    path: '/dashboard/app',
+    path: '/dashboard/organizations',
     icon: <CorporateFareIcon/>,
   },
   {

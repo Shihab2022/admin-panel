@@ -24,7 +24,6 @@ export default function Organizations() {
 
   const getOrgs = async () => {
     setLoading(true)
-    setOrgsData([]);
     const { data } = await getOrgsApi({});
     if (data) {
       setOrgsData(data?.data || []);
@@ -41,17 +40,22 @@ export default function Organizations() {
     setOpen(null);
   };
   const updateOrg = async (name, status) => {
+    setLoading(true)
     try {
+      setOrgsData([])
       const res = await confirmOrgApi({ name, status });
       if (res.success) {
         showToast(SUCCESS, "Organisation status updated");
-        getOrgs();
+        const remain=orgsData?.filter(d=>d?.name===name)?.map(el => ({...el, accountverified: !el.accountverified}))
+        const remains=orgsData?.filter(d=>d?.name!==name)
+        setOrgsData([...remain,...remains])
       } else {
         showToast(FAILED, res.error || SOMETHING_WENT_WRONG);
       }
     } catch (error) {
       showToast(FAILED, SOMETHING_WENT_WRONG);
     }
+    setLoading(false)
   };
   const columns = [
     { title: 'Name', field: 'name' },
